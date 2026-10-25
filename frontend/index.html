@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trend Tracker Engine - 실시간 트렌드 노드 시각화</title>
+    <!-- Vis.js Network CDN -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a2e; color: #fff; }
+        
+        #header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 30px; background-color: #16213e; border-bottom: 2px solid #0f3460;
+        }
+        #header h1 { font-size: 1.5rem; color: #e94560; }
+        
+        .controls { display: flex; gap: 15px; align-items: center; }
+        select, button {
+            padding: 8px 16px; border-radius: 6px; border: none;
+            background-color: #0f3460; color: #fff; font-size: 0.95rem; cursor: pointer;
+        }
+        select:hover, button:hover { background-color: #e94560; }
+
+        #container { display: flex; height: calc(100vh - 70px); }
+        #network-canvas { flex: 1; height: 100%; background-color: #0f172a; }
+        
+        #sidebar {
+            width: 320px; background-color: #16213e; border-left: 2px solid #0f3460;
+            padding: 20px; display: flex; flex-direction: column; gap: 15px;
+        }
+        .card { background-color: #1a1a2e; padding: 15px; border-radius: 8px; border: 1px solid #0f3460; }
+        .card h3 { color: #e94560; margin-bottom: 10px; font-size: 1.1rem; }
+        .card p { font-size: 0.9rem; line-height: 1.5; color: #cbd5e1; }
+    </style>
+</head>
+<body>
+
+    <div id="header">
+        <h1>📊 Trend Tracker Engine</h1>
+        <div class="controls">
+            <label for="categorySelect">카테고리:</label>
+            <select id="categorySelect">
+                <option value="3" selected>뉴스/경제 (3번)</option>
+                <option value="1">종합/커뮤니티 (1번)</option>
+                <option value="2">IT/기술 (2번)</option>
+                <option value="4">서브컬처/취미 (4번)</option>
+            </select>
+            <button id="refreshBtn">🔄 데이터 갱신</button>
+        </div>
+    </div>
+
+    <div id="container">
+        <div id="network-canvas"></div>
+        <div id="sidebar">
+            <div class="card">
+                <h3>📌 선택된 키워드 정보</h3>
+                <p id="nodeInfo">그래프 상의 노드를 클릭하면 해당 키워드의 상세 빈도수와 연관 노드가 표시됩니다.</p>
+            </div>
+            <div class="card">
+                <h3>💡 범례 & 정보</h3>
+                <p>• <b>노드 크기:</b> 키워드 언급 빈도수 (Frequency)<br>
+                   • <b>에지 두께:</b> 단어 간 연관 가중치 (Weight)<br>
+                   • <b>물리 엔진:</b> 드래그 및 줌 탐색 가능</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
